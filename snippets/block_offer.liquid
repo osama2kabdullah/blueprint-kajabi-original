@@ -1,0 +1,30 @@
+{% assign offer = current_site.find_offer[block.settings.offer] %}
+
+<style>
+  {% if block.settings.currently_owned %}
+    {% if offer.currently_owned? %}
+      #block-{{ block.id }} {
+        display: none;
+      }
+    {% endif %}
+  {% endif %}
+</style>
+
+{% if offer %}
+  <a class="card" href="{{ offer.checkout_url }}" {% if block.settings.new_tab == true %} target="_blank" rel="noopener" {% endif %}>
+    {% if offer.image_url %}
+      <img class="card__image" src="{{ offer.image_url }}" alt="" />
+    {% endif %}
+    <div class="card__body background-{{ block.settings.background_color | color_scheme_class }}">
+      <h4 class="card__title">{{ offer.title }}</h4>
+      <p class="card__text">{{ offer.description | strip_html }}</p>
+      <h5 class="card__price">{{ offer | display_price }}</h5>
+    </div>
+  </a>
+{% else %}
+  {% if editor %}
+    <div class="editor-null" kjb-settings-id="{{ 'offer' | settings_id: section: section, block: block }}">
+      Click here to select an offer to display.
+    </div>
+  {% endif %}
+{% endif %}

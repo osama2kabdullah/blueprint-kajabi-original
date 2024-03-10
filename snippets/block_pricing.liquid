@@ -1,0 +1,42 @@
+<style>
+  {% if block.settings.custom_icon %}
+  #block-{{ block.id }} .pricing__content ul li:before {
+    content: "\{{ block.settings.list_icon }}";
+    color: {{ block.settings.icon_color }};
+  }
+  {% endif %}
+  #block-{{ block.id }} .pricing__name {
+    color: {{ block.settings.price_name_color | default: settings.color_primary }};
+  }
+  #block-{{ block.id }} .pricing__price {
+    color: {{ block.settings.price_color }};
+  }
+  {% if block.settings.price_caption_color != blank %}
+    #block-{{ block.id }} .pricing__heading {
+      color: {{ block.settings.price_caption_color }};
+      font-weight: 700;
+    }
+  {% endif %}
+</style>
+
+<div class="pricing">
+  {% if block.settings.name != blank %}
+    <h4 class="pricing__name" kjb-settings-id="{{ 'name' | settings_id: section: section, block: block }}">{{ block.settings.name }}</h4>
+  {% endif %}
+  {% if block.settings.price != blank %}
+    <div class="pricing__info">
+        <h2 class="pricing__price" kjb-settings-id="{{ 'price' | settings_id: section: section, block: block }}">{{ block.settings.price}}</h2>
+    </div>
+  {% endif %}
+  {% if block.settings.heading != blank %}
+      <p class="pricing__heading" kjb-settings-id="{{ 'heading' | settings_id: section: section, block: block }}">{{ block.settings.heading }}</p>
+  {% endif %}
+  {% if block.settings.text != blank %}
+    <div class="pricing__content {% if block.settings.custom_icon %}custom-icon{% endif %}" kjb-settings-id="{{ 'text' | settings_id: section: section, block: block }}">
+      {{ block.settings.text }}
+    </div>
+  {% endif %}
+  {% if block.settings.show_cta %}
+    {% include "block_cta" %}
+  {% endif %}
+</div>

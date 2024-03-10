@@ -1,0 +1,57 @@
+<head>
+    {% csrf_meta_tags %}
+    <title>
+      {% if page_title %}
+        {{ page_title }}
+      {% else %}
+        {{ current_site.title }}
+      {% endif %}
+    </title>
+    <meta charset="utf-8" />
+    <meta http-equiv="x-ua-compatible" content="ie=edge, chrome=1">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    {% if page_description %}
+      <meta name="description" content="{{ page_description | escape }}" />
+    {% endif %}
+    {% include "global_social_meta_tags" %}
+    {% if settings.favicon and settings.favicon != "" %}
+      <link href="{{ settings.favicon | image_picker_url: 'favicon.png' }}?v=2" rel="shortcut icon" />
+    {% else %}
+      <link href="{{ current_site.favicon_image | image_picker_url: 'favicon.png' }}?v=2" rel="shortcut icon" />
+    {% endif %}
+    <link rel="canonical" href="{{ canonical_url }}" />
+
+    <!-- Google Fonts ====================================================== -->
+    {% if settings.font_family_body == settings.font_family_heading %}
+      <link href="//fonts.googleapis.com/css?family={{ settings.font_family_body | replace: ' ', '+' }}:400,700,400italic,700italic" rel="stylesheet" type="text/css">
+    {% else %}
+      <link href="//fonts.googleapis.com/css?family={{ settings.font_family_body | replace: ' ', '+' }}:400,700,400italic,700italic|{{ settings.font_family_heading | replace: ' ', '+' }}:400,700,400italic,700italic" rel="stylesheet" type="text/css">
+    {% endif %}
+
+    <!-- Kajabi CSS ======================================================== -->
+    {{ "core.css" | kajabi_asset_url | stylesheet_tag }}
+
+    {% comment %}
+    <!-- Optional Bootstrap CSS - Remove the liquid comment tags to enable -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    {% endcomment %}
+
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.15.2/css/all.css" crossorigin="anonymous">
+
+    {{ "styles.css" | asset_url | stylesheet_tag }}
+
+    <!-- Customer CSS ====================================================== -->
+    {{ "overrides.css" | asset_url | stylesheet_tag }}
+    {% include "global_custom_css" %}
+
+    <!-- Kajabi Editor Only CSS ============================================ -->
+    {% if editor %}
+      {% include "editor_guides" %}
+      {% include "editor_grid" %}
+      {% include "editor_reveal" %}
+    {% endif %}
+
+    <!-- Header hook ======================================================= -->
+    {% content_for_header %}
+
+  </head>

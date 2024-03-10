@@ -1,0 +1,19 @@
+<style>
+
+.list_icon {
+    display: flex;
+    gap: 1rem;
+    align-items: center;
+}
+
+</style>
+<div class="list_icon">
+  <img
+    class="feature__image"
+    src="{{ block.settings.icon | image_picker_url: 'feature.png' }}"
+    kjb-settings-id="{{ 'image' | settings_id: section: section, block: block }}"
+    alt="{{ block.settings.image_alt }}"
+    style="width: {{ block.settings.size }}px"
+  >
+  <div>{{ block.settings.list_text }}</div>
+</div>

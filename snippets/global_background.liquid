@@ -1,0 +1,18 @@
+<style>
+  body {
+    {% if settings.use_background_image %}
+      background: linear-gradient({{ settings.background_color | default: "rgba(0,0,0,0)" }}, {{ settings.background_color | default: "rgba(0,0,0,0)" }}), url({{ settings.background_image | image_picker_url: "background.jpg" }});
+      background-position: center center;
+      background-repeat: no-repeat;
+      -webkit-background-size: cover;
+      -moz-background-size: cover;
+      -o-background-size: cover;
+      background-size: cover;
+      background-attachment: fixed;
+    {% else %}
+      {% if settings.background_color != blank %}
+        background-color: {{ settings.background_color }};
+      {% endif %}
+    {% endif %}
+  }
+</style>

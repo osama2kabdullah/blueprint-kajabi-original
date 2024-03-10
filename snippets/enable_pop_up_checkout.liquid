@@ -1,0 +1,18 @@
+{% if action_setting contains "popup_checkout" %}
+  {{ "" | popup_checkout }}
+  {% assign popup_checkout = true %}
+{% else %}
+  {% assign popup_checkout = false %}
+{% endif %}
+
+{% if popup_checkout == true %}
+  <div
+    data-enable-modal="{% if editor %}false{% else %}true{% endif %}"
+    data-popup-checkout="{{ action_setting | replace: "#popup_checkout_", "" }}"
+    kjb-settings-id="{{ 'btn_background_color' | settings_id: section: section, block: block }}"
+  >
+    {{ trigger }}
+  </div>
+{% else %}
+  {{ trigger }}
+{% endif %}

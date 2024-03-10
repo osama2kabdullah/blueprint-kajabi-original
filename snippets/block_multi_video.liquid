@@ -1,0 +1,28 @@
+<style>
+  #block-{{ block.id }} img {
+    border-radius: {{ block.settings.border_radius | remove: "px" | default: 100 | times: 1 | append: "px" }};
+  }
+  #block-{{ block.id }} img.active {
+    box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    -webkit-box-sizing: border-box;
+    border: 4px solid {{ settings.color_primary }};
+  }
+  #block-{{ block.id }} img.locked {
+    filter: grayscale(100%);
+    opacity: .5;
+  }
+</style>
+
+<h5>{{ block.settings.label }}</h5>
+<p>{{ block.settings.title }}</p>
+{% if block.settings.state == "click" %}
+  {% capture multi_video_action %}
+  <a href="{{ block.settings.img_action }}" {% if block.settings.img_action == "#two-step" %} data-target="#two-step" data-toggle="modal" {% endif %} {% if block.settings.new_tab == true %} target="_blank" rel="noopener" {% endif %} aria-label="{{ block.settings.title }}">
+    <img src="{{ block.settings.image | image_picker_url: 'placeholder.png' }}" kjb-settings-id="{{ 'image' | settings_id: section: section, block: block }}" alt="{{ block.settings.image_alt }}" />
+  </a>
+  {% endcapture %}
+  {% include "enable_pop_up_checkout", action_setting: block.settings.img_action, trigger: multi_video_action %}
+{% else %}
+  <img class="{{ block.settings.state }}" src="{{ block.settings.image | image_picker_url: 'placeholder.png' }}" kjb-settings-id="{{ 'image' | settings_id: section: section, block: block }}" alt="{{ block.settings.image_alt }}" />
+{% endif %}

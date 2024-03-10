@@ -1,0 +1,72 @@
+<style>
+  {% if block.settings.drop_cap %}
+    #block-{{ block.id }} p:first-of-type::first-letter {
+      font-size: 80px;
+      line-height: 80px;
+      float: left;
+      margin: 0 20px 0 0;
+      color: {{ block.settings.cap_color }};
+    }
+  {% endif %}
+  #block-1577982541036_0 .btn {
+    margin-top: 1rem;
+  }
+  /* Styles for desktop view */
+.container-div-{{ forloop.index }} {
+  display: flex;
+  align-items: center;
+  {% if block.settings.bg_type == "image" %}
+    background: url({{ block.settings.background_image | image_picker_url: "background.jpg" }});
+  {% endif %}
+  background-position: center;
+  background-size: cover;
+  background-repeat: no-repeat;
+}
+
+.left-content-{{ forloop.index }} {
+  order: 1; /* Ensures this div appears on the left side in desktop view */
+  writing-mode: vertical-rl;
+  transform: rotate(180deg);
+}
+
+.left-content-{{ forloop.index }} * {
+  color: {{ block.settings.heading_color }} !important;
+}
+.right-content-{{ forloop.index }} * {
+  color: {{ block.settings.description_color }} !important;
+}
+
+.right-content-{{ forloop.index }} {
+  order: 2; /* Ensures this div appears on the right side in desktop view */
+}
+
+/* Styles for mobile view */
+@media (max-width: 768px) {
+  .container-div-{{ forloop.index }} {
+      flex-direction: column; /* Stacks the div elements vertically in mobile view */
+  }
+
+  .left-content-{{ forloop.index }},
+  .right-content-{{ forloop.index }} {
+      order: initial; /* Resets the order to default for mobile view */
+  }
+
+  .left-content-{{ forloop.index }} {
+    writing-mode: horizontal-tb;
+    transform: none;
+  }
+}
+</style>
+
+<div kjb-settings-id="{{ 'background_color' | settings_id: section: section, block: block }}" class="container-div-{{ forloop.index }}">
+  <div class="left-content-{{ forloop.index }}">
+      {{ block.settings.heading }}
+  </div>
+  <div class="right-content-{{ forloop.index }}">
+      {{ block.settings.paragraph }}
+  </div>
+</div>
+
+{% if block.settings.use_btn %}
+  {% include 'block_cta' %}
+{% endif %}

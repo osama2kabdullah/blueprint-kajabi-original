@@ -1,0 +1,49 @@
+<style>
+  #block-{{ block.id }} .feature__image,
+  [data-slick-id="{{ block.id }}"] .feature__image {
+    width: {{ block.settings.image_width | remove: "px" | default: 50 | append: "px" }};
+    margin: auto;
+    border-radius: {{ block.settings.image_border_radius | remove: "px" | default: 100 | times: 1 | append: "px" }};
+  }
+  {% if carousel %}
+    [data-slick-id="{{ block.id }}"] {
+      height: auto;
+      align-self: stretch;
+    }
+    [data-slick-id="{{ block.id }}"] .feature__image {
+      display: inline-block;
+    }
+    [data-slick-id="{{ block.id }}"] .block {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+  {% endif %}
+</style>
+<div class="feature">
+  <div class="top-content">
+    {% unless block.settings.hide_image %}
+      {% capture feature_image_action %}
+      {% if block.settings.img_action != blank %}
+        <a href="{{ block.settings.img_action }}" {% if block.settings.img_action == "#two-step" %} data-target="#two-step" data-toggle="modal" {% endif %} {% if block.settings.new_tab_image == true %} target="_blank" rel="noopener" {% endif %}>
+      {% endif %}
+        <img class="feature__image" src="{{ block.settings.image | image_picker_url: 'feature.png' }}" kjb-settings-id="{{ 'image' | settings_id: section: section, block: block }}" alt="{{ block.settings.image_alt }}" />
+      {% if block.settings.img_action != blank %}
+        </a>
+      {% endif %}
+      {% endcapture %}
+      {% include "enable_pop_up_checkout", action_setting: block.settings.img_action, trigger: feature_image_action %}
+    {% endunless %}
+    <div class="feature__text" kjb-settings-id="{{ 'text' | settings_id: section: section, block: block }}">
+      {{ block.settings.text }}
+    </div>
+  </div>
+
+  <div class="bottom-content">
+    {{ block.settings.bottom_text }}
+  </div>
+
+  {% if block.settings.use_btn %}
+    {% include "block_cta" %}
+  {% endif %}
+</div>
