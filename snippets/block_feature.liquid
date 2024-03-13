@@ -39,7 +39,7 @@
     </div>
   </div>
 
-  <div class="bottom-content" kjb-settings-id="{{ 'bottom_text' | settings_id: section: section, block: block }}">
+  <div class="bottom-content-{{ section.id }}" kjb-settings-id="{{ 'bottom_text' | settings_id: section: section, block: block }}">
     {{ block.settings.bottom_text }}
   </div>
 

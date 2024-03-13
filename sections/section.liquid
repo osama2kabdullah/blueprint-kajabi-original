@@ -1,5 +1,17 @@
 {% include "section_styles" %}
 
+<style>
+  .bottom-content-{{ section.id }} {
+    height: {{ section.settings.bottom_content_height }}px;
+  }
+  @media only screen and (max-width: 425px){
+    /*Small smartphones [325px -> 425px]*/
+    .bottom-content-{{ section.id }} {
+      height: auto;
+    }
+  }
+</style>
+
 <section kjb-settings-id="{{ 'background_color' | settings_id: section: section }}"
   class="section
   {% if section.settings.hide_on_desktop == true %}hidden--desktop{% endif %}
@@ -147,6 +159,15 @@
               "label": "Bottom"
             }
           ]
+        },
+        {
+          "type": "range",
+          "id": "bottom_content_height",
+          "label": "Bottom Content Height",
+          "default": 100,
+          "min": 10,
+          "step": 5,
+          "max": 1000
         },
         {
           "type": "select",
