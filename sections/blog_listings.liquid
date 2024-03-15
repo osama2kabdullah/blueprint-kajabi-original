@@ -88,10 +88,29 @@
         {% else %}
           <div class="col-lg-12">
         {% endif %}
+          <div style="justify-content: center;" class="blog-listings__content blog-listings__content--{{ section.settings.layout_style }}">
+            {% paginate blog_posts by section.settings.pagination_amount %}
+              {% for blog_post in paginate.collection %}
+                {% if forloop.first %}
+                  {% include "blog_listing" %}
+                {% endif %}
+              {% endfor %}
+            {% endpaginate %}
+          </div>
+        </div>
+      </div>
+      <div class="row">
+        {% if section.settings.show_sidebar_desktop %}
+          <div class="col-lg-9">
+        {% else %}
+          <div class="col-lg-12">
+        {% endif %}
           <div class="blog-listings__content blog-listings__content--{{ section.settings.layout_style }}">
             {% paginate blog_posts by section.settings.pagination_amount %}
               {% for blog_post in paginate.collection %}
-                {% include "blog_listing" %}
+                {% unless forloop.first %}
+                  {% include "blog_listing" %}
+                {% endunless %}
               {% endfor %}
               {% if paginate.pages > 1 %}
                 {% include "pagination" %}
